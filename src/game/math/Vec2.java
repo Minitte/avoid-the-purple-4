@@ -28,39 +28,56 @@ public class Vec2 {
 	}
 	
 	/**
+	 * Copy constructor
+	 * @param other
+	 */
+	public Vec2(Vec2 other) {
+		x = other.x;
+		y = other.y;
+	}
+	
+	/**
 	 * Adds amt to this vector
 	 * @param amt
 	 */
-	public void add(Vec2 amt) {
+	public Vec2 add(Vec2 amt) {
 		x += amt.x;
 		y += amt.y;
+		
+		return this;
 	}
 	
 	/**
 	 * Minus amt to this vector
 	 * @param amt
 	 */
-	public void minus(Vec2 amt) {
+	public Vec2 minus(Vec2 amt) {
 		x += amt.x;
 		y += amt.y;
+		
+		return this;
 	}
 	
 	/**
 	 * Multiply amt to this vector
 	 * @param amt
 	 */
-	public void multiply(Vec2 amt) {
+	public Vec2 multiply(Vec2 amt) {
 		x *= amt.x;
 		y *= amt.y;
+		
+		return this;
 	}
 	
 	/**
 	 * Divide amt to this vector
 	 * @param amt
 	 */
-	public void divide(Vec2 amt) {
+	public Vec2 divide(Vec2 amt) {
 		x /= amt.x;
 		y /= amt.y;
+		
+		return this;
 	}
 	
 	/**
@@ -69,6 +86,31 @@ public class Vec2 {
 	 */
 	public float dot(Vec2 amt) {
 		return (x * amt.y) + (y * amt.x);
+	}
+	
+	/**
+	 * Normalizes the vector
+	 */
+	public void normalize() {
+		float len = getLength();
+		x /= len;
+		y /= len;
+	}
+	
+	/**
+	 * Calulates the length
+	 * @return
+	 */
+	public float getLength() {
+		return (float)Math.sqrt((x * x) + (y * y));
+	}
+	
+	/**
+	 * Squared of the length, faster then getting actual length
+	 * @return
+	 */
+	public float getLengthSquared() {
+		return (x * x) + (y * y);
 	}
 
 }
