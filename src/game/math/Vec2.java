@@ -70,6 +70,18 @@ public class Vec2 {
 	}
 	
 	/**
+	 * Multiplies with the matrix
+	 * @param m
+	 * @return
+	 */
+	public Vec2 multiply(Mat22 m) {
+		x = (x * m.values[0][0]) + (y * m.values[0][1]);
+		y = (x * m.values[1][0]) + (y * m.values[1][1]);
+		
+		return this;
+	}
+	
+	/**
 	 * Divide amt to this vector
 	 * @param amt
 	 */
@@ -91,10 +103,12 @@ public class Vec2 {
 	/**
 	 * Normalizes the vector
 	 */
-	public void normalize() {
+	public Vec2 normalize() {
 		float len = getLength();
 		x /= len;
 		y /= len;
+		
+		return this;
 	}
 	
 	/**
