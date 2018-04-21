@@ -12,6 +12,8 @@ import game.math.Vec2;
  *
  */
 public class CollisionBody {
+	private static final int CIRCLE_DEGREE = 8;
+	
 	public Vec2[] vertices;
 	public Vec2[] normals;
 
@@ -22,6 +24,31 @@ public class CollisionBody {
 		super();
 		this.vertices = vertices;
 		
+		normals = new Vec2[vertices.length];
+		
+		for (int i = 0; i < vertices.length; i++) {
+			normals[i] = new Vec2(vertices[i]).minus(vertices[(i + 1) % vertices.length]).normalize();
+		}
+	}
+	
+	/**
+	 * circle-ish
+	 * @param radius
+	 * @param pt
+	 */
+	public CollisionBody(float radius, Vec2 pt) {
+		// vertices
+		vertices = new Vec2[CIRCLE_DEGREE];
+		float radInc = (float)Math.PI;
+		radInc *= 2;
+		radInc /= CIRCLE_DEGREE;
+		
+		for (int i = 0; i < vertices.length; i++) {
+			Vec2 out = new Vec2((float)Math.cos((float)i * radInc), (float)Math.sin((float)i * radInc)).multiply(radius);
+			vertices[i] = new Vec2(pt).add(out);
+		}
+		
+		// normals
 		normals = new Vec2[vertices.length];
 		
 		for (int i = 0; i < vertices.length; i++) {

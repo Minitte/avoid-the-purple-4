@@ -70,6 +70,17 @@ public class Vec2 {
 	}
 	
 	/**
+	 * Multiply amt to this vector (both x and y)
+	 * @param amt
+	 */
+	public Vec2 multiply(float amt) {
+		x *= amt;
+		y *= amt;
+		
+		return this;
+	}
+	
+	/**
 	 * Multiplies with the matrix
 	 * @param m
 	 * @return
