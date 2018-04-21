@@ -28,6 +28,15 @@ public class Vec2 {
 	}
 	
 	/**
+	 * Noramlized/unit vector
+	 * @param theta
+	 */
+	public Vec2(float theta) {
+		x = (float)Math.cos(theta);
+		y = (float)Math.sin(theta);
+	}
+	
+	/**
 	 * Copy constructor
 	 * @param other
 	 */
@@ -52,8 +61,8 @@ public class Vec2 {
 	 * @param amt
 	 */
 	public Vec2 minus(Vec2 amt) {
-		x += amt.x;
-		y += amt.y;
+		x -= amt.x;
+		y -= amt.y;
 		
 		return this;
 	}

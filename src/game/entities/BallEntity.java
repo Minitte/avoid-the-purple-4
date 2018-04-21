@@ -38,8 +38,12 @@ public class BallEntity extends Entity{
 	 */
 	@Override
 	public void update(float delta) {
-		position.x += velocity.x * delta;
-		position.y += velocity.y * delta;
+		
+		Vec2 scaledVel = new Vec2(velocity).multiply(delta);
+		
+		position.add(scaledVel);
+		
+		body.translateVertices(scaledVel);
 	}
 
 	/*
