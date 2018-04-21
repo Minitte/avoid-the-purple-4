@@ -4,12 +4,14 @@
 package game;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.stream.IntStream;
 
-import game.entities.BallEntity;
 import game.entities.Entity;
 import game.math.Vec2;
+import game.stage.Stage;
+import game.stage.TestStage;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
@@ -20,10 +22,13 @@ import javafx.scene.paint.Color;
 public class GameCore {
 	
 	private List<Entity> ents;
+	private float cleanTime;
+	private Stage stg;
 	
 	public GameCore() {
 		ents = new ArrayList<>();
-		ents.add(new BallEntity(new Vec2(50f, 100f), 0f, -1, 30f));
+		
+		stg = new TestStage(ents);
 	}
 	
 	/**
@@ -31,6 +36,9 @@ public class GameCore {
 	 * @param delta
 	 */
 	public void update(float delta) {
+		cleanTime += delta;
+		stg.update(delta);
+		
 		// collision Check
 		IntStream.range(0, ents.size()).parallel().forEach(i -> {
 			Entity a = ents.get(i);
@@ -50,6 +58,20 @@ public class GameCore {
 		IntStream.range(0, ents.size()).parallel().forEach(i -> {
 			ents.get(i).update(delta);
 		});
+		
+		// remove outside
+		if (cleanTime > 3f) {
+			cleanTime = 0f;
+			Iterator<Entity> it = ents.iterator();
+			while (it.hasNext()) {
+				Entity e = it.next();
+				
+				// remove outside of box
+				if (e.position.x < -100 || e.position.x > 1380 || e.position.y < -100 || e.position.y > 820) {
+					it.remove();
+				}
+			}
+		}
 	}
 	
 	/**
@@ -72,6 +94,12 @@ public class GameCore {
 					gc.fillRect(vert[j].x - 2f, vert[j].y - 2f, 4f, 4f);
 				}
 			}
+		}
+		
+		for (int i = 0; i < ents.size(); i++) {
+			gc.setStroke(Color.AQUA);
+			Vec2 dest = new Vec2(ents.get(i).position).add(ents.get(i).velocity);
+			gc.strokeLine(ents.get(i).position.x, ents.get(i).position.y, dest.x, dest.y);
 		}
 	}
 }
