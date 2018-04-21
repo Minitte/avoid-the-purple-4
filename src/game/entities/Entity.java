@@ -3,8 +3,10 @@
  */
 package game.entities;
 
+import game.collision.CollisionBody;
 import game.math.Vec2;
 import javafx.scene.canvas.GraphicsContext;
+
 
 /**
  * @author Davis
@@ -16,6 +18,8 @@ public abstract class Entity {
 	public int team;
 	public Vec2 velocity;
 	public int id;
+	public CollisionBody body;
+	public boolean collidable;
 
 	/**
 	 * @param position
@@ -27,6 +31,8 @@ public abstract class Entity {
 		this.position = position;
 		this.angle = angle;
 		this.team = team;
+		
+		velocity = new Vec2();
 	}
 
 	/**
@@ -43,4 +49,6 @@ public abstract class Entity {
 	 * @param delta
 	 */
 	public abstract void draw(GraphicsContext gc, float delta);
+	
+	public abstract void handleCollision(Entity other);
 }
