@@ -8,6 +8,7 @@ import java.util.Random;
 
 import game.entities.Entity;
 import game.math.Vec2;
+import javafx.scene.canvas.GraphicsContext;
 
 /**
  * @author Davis
@@ -36,6 +37,8 @@ public abstract class Stage {
 	 * @param delta
 	 */
 	public abstract void update(float delta);
+	
+	public abstract void drawBackground(GraphicsContext gc, float delta);
 	
 	/**
 	 * Gets a random spot long the side

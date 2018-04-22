@@ -102,6 +102,8 @@ public class GameCore {
 	 * @param delta
 	 */
 	public void render(GraphicsContext gc, float delta) {
+		stg.drawBackground(gc, delta);
+		
 		// draw objects
 		for (int i = 0; i < ents.size(); i++) {
 			ents.get(i).draw(gc, delta);

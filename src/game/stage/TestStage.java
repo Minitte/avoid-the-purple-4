@@ -9,6 +9,7 @@ import java.util.Random;
 import game.entities.BallEntity;
 import game.entities.Entity;
 import game.math.Vec2;
+import javafx.scene.canvas.GraphicsContext;
 
 /**
  * @author Davis
@@ -94,6 +95,15 @@ public class TestStage extends Stage {
 	}
 
 	private void ballWaveSpawn() {
+		
+	}
+
+	/* (non-Javadoc)
+	 * @see game.stage.Stage#drawBackground(javafx.scene.canvas.GraphicsContext, float)
+	 */
+	@Override
+	public void drawBackground(GraphicsContext gc, float delta) {
+		// TODO Auto-generated method stub
 		
 	}
 }
