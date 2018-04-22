@@ -56,9 +56,6 @@ public class BallEntity extends Entity{
 		gc.setFill(Color.PURPLE);
 		gc.fillOval(position.x - radius, position.y - radius, radius * 2f, radius * 2f);
 		
-		gc.setFill(Color.GREEN);
-		gc.fillRect(position.x - 2f, position.y - 2f, 4f, 4f);
-		
 		if (collided) {
 			collided = false;
 			gc.setStroke(Color.BEIGE);
