@@ -31,6 +31,7 @@ public class Player extends Entity implements Comparable<Player>{
 		this.colour = colour;
 		body = new CollisionBody(radius, position);
 		
+		id = 1;
 		speed = 150f;
 		health = 30;
 		collidable = true;

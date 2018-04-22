@@ -55,12 +55,6 @@ public class BallEntity extends Entity{
 	public void draw(GraphicsContext gc, float delta) {
 		gc.setFill(Color.PURPLE);
 		gc.fillOval(position.x - radius, position.y - radius, radius * 2f, radius * 2f);
-		
-		if (collided) {
-			collided = false;
-			gc.setStroke(Color.BEIGE);
-			gc.strokeText("Hit!", position.x, position.y);
-		}
 	}
 
 	/* (non-Javadoc)
@@ -68,7 +62,9 @@ public class BallEntity extends Entity{
 	 */
 	@Override
 	public void handleCollision(Entity other) {
-		collided = true;
+		if (other.id > 0) {
+			dead = true;
+		}
 	}
 
 }

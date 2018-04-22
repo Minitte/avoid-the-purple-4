@@ -79,19 +79,17 @@ public class GameCore {
 			ents.get(i).update(delta);
 		});
 		
-		// remove outside
-		if (cleanTime > 3f) {
-			cleanTime = 0f;
-			Iterator<Entity> it = ents.iterator();
-			while (it.hasNext()) {
-				Entity e = it.next();
-				
-				// remove outside of box
-				if (e.position.x < -100 || e.position.x > 1380 || e.position.y < -100 || e.position.y > 820) {
-					it.remove();
-				}
+		// clean up dead stuff
+		Iterator<Entity> it = ents.iterator();
+		while (it.hasNext()) {
+			Entity e = it.next();
+			
+			// remove outside of box
+			if (e.position.x < -100 || e.position.x > 1380 || e.position.y < -100 || e.position.y > 820 || e.dead) {
+				it.remove();
 			}
 		}
+		
 		
 		//sort player by score
 		Collections.sort(players);

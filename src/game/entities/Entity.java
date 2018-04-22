@@ -24,6 +24,7 @@ public abstract class Entity {
 	public int team;
 	public float speed;
 	public int health;
+	public boolean dead;
 	
 	/**
 	 * @param position
