@@ -20,6 +20,7 @@ import game.stage.TestStage;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.scene.text.TextAlignment;
 
 /**
  * @author Davis
@@ -117,9 +118,11 @@ public class GameCore {
 		for (int i = 0; i < players.size(); i++) {
 			Player p = players.get(i);
 			gc.setFill(p.colour);
+			gc.setTextAlign(TextAlignment.LEFT);
 			gc.fillText(String.format("%d %s %03d HP %09d PT", i+1, p.name, p.health, p.score), 10f, 20f + (i * 30f));
 		}
 		
+		gc.setTextAlign(TextAlignment.CENTER);
 		gc.fillText(String.format("Time: %06.1f Obj: %04d", totalTime, ents.size()), 640, 20);
 		
 		// draw bodies

@@ -9,6 +9,8 @@ import game.collision.CollisionBody;
 import game.math.Vec2;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.TextAlignment;
 
 /**
  * @author Davis
@@ -16,6 +18,8 @@ import javafx.scene.paint.Color;
  */
 public class Player extends Entity implements Comparable<Player>{
 
+	public static final Font NAME_FONT = new Font("Courier", 18);
+	
 	public float radius = 6f;
 	public Color colour;
 	public String name;
@@ -58,6 +62,12 @@ public class Player extends Entity implements Comparable<Player>{
 	public void draw(GraphicsContext gc, float delta) {
 		gc.setFill(colour);
 		gc.fillOval(position.x - radius, position.y - radius, radius * 2f, radius * 2f);
+		
+		// name
+		gc.setFont(NAME_FONT);
+		gc.setFill(Color.BLACK);
+		gc.setTextAlign(TextAlignment.CENTER);
+		gc.fillText(name, position.x, position.y - (radius * 3));
 	}
 
 	/* (non-Javadoc)

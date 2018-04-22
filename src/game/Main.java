@@ -6,6 +6,7 @@ import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.VPos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
@@ -51,6 +52,7 @@ public class Main extends Application {
 		
 		game = new GameCore();
 		gc = canvas.getGraphicsContext2D();
+        gc.setTextBaseline(VPos.CENTER);
 		initializeLoop();
 		frameTime = System.currentTimeMillis();
 		updateTime = frameTime;
