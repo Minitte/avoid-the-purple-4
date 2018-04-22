@@ -11,7 +11,7 @@ public class Mat22 {
 	public float[][] values;
 	
 	/**
-	 * Rotation matrix
+	 * Rotation matrix (ccw)
 	 * @param r
 	 */
 	public Mat22(float r) {

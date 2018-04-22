@@ -3,6 +3,8 @@
  */
 package game.entities;
 
+import java.util.List;
+
 import game.collision.CollisionBody;
 import game.math.Vec2;
 import javafx.scene.canvas.GraphicsContext;
@@ -45,7 +47,7 @@ public abstract class Entity {
 	 * 
 	 * @param delta
 	 */
-	public abstract void update(float delta);
+	public abstract void update(float delta, List<Entity> ents);
 
 	/**
 	 * draws the entity
@@ -55,5 +57,5 @@ public abstract class Entity {
 	 */
 	public abstract void draw(GraphicsContext gc, float delta);
 	
-	public abstract void handleCollision(Entity other);
+	public abstract void handleCollision(Entity other, List<Entity> ents);
 }

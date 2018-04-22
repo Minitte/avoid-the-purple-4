@@ -3,6 +3,8 @@
  */
 package game.entities;
 
+import java.util.List;
+
 import game.collision.CollisionBody;
 import game.math.Vec2;
 import javafx.scene.canvas.GraphicsContext;
@@ -41,7 +43,7 @@ public class Player extends Entity implements Comparable<Player>{
 	 * @see game.entities.Entity#update(float)
 	 */
 	@Override
-	public void update(float delta) {
+	public void update(float delta, List<Entity> ents) {
 		Vec2 scaledVel = new Vec2(velocity).multiply(delta);
 		
 		position.add(scaledVel);
@@ -59,14 +61,14 @@ public class Player extends Entity implements Comparable<Player>{
 	}
 
 	/* (non-Javadoc)
-	 * @see game.entities.Entity#handleCollision(game.entities.Entity)
+	 * @see game.entities.Entity#handleCollision(game.entities.Entity, java.util.List)
 	 */
 	@Override
-	public void handleCollision(Entity other) {
+	public void handleCollision(Entity other, List<Entity> ents) {
 		// TODO Auto-generated method stub
-
+		
 	}
-
+	
 	/* (non-Javadoc)
 	 * @see java.lang.Comparable#compareTo(java.lang.Object)
 	 */
@@ -74,4 +76,6 @@ public class Player extends Entity implements Comparable<Player>{
 	public int compareTo(Player arg0) {
 		return arg0.score - score;
 	}
+
+	
 }

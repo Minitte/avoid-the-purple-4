@@ -3,11 +3,11 @@
  */
 package game.stage;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import game.entities.Entity;
-import game.math.Vec2;
+import game.stage.spawner.Spawner;
 import javafx.scene.canvas.GraphicsContext;
 
 /**
@@ -15,14 +15,13 @@ import javafx.scene.canvas.GraphicsContext;
  *
  */
 public abstract class Stage {
-
-	public static final float ROUND_SPEEDUP = 0.2f;
 	
 	public int maxRound = 5;
 	public int round;
 	public float time;
 	
 	protected List<Entity> ents;
+	protected List<Spawner> spawners;
 	
 	/**
 	 * @param ents
@@ -30,25 +29,43 @@ public abstract class Stage {
 	public Stage(List<Entity> ents) {
 		super();
 		this.ents = ents;
+		spawners = new ArrayList<>();
 	}
 
 	/**
 	 * Updates the stage like spawning things
 	 * @param delta
 	 */
-	public abstract void update(float delta);
-	
-	public abstract void drawBackground(GraphicsContext gc, float delta);
+	public void update(float delta) {
+		time += delta;
+		stageUpdate(delta);
+		
+		// spawn stuff
+		for (int i = 0; i < spawners.size(); i++) {
+			spawners.get(i).update(delta, ents);
+		}
+	}
 	
 	/**
-	 * Gets a random spot long the side
-	 * @param s
-	 * @return
+	 * Increase all spawner difficulty
 	 */
-	protected Vec2 getRandomSpot(Side s, Random rand) {
-		float x = s.minX + rand.nextFloat() * (s.maxX - s.minX);
-		float y = s.minY + rand.nextFloat() * (s.maxY - s.minY);
-		return new Vec2(x, y);
+	public void increaseDifficultyAll() {
+		for (int i = 0; i < spawners.size(); i++) {
+			spawners.get(i).roundUp();
+		}
 	}
+	
+	/**
+	 * Updates the custom stuff for custom stages like adding custom spawner :)
+	 * @param delta
+	 */
+	protected abstract void stageUpdate(float delta);
+	
+	/**
+	 * Draws the background for the stage if any
+	 * @param gc
+	 * @param delta
+	 */
+	public abstract void drawBackground(GraphicsContext gc, float delta);
 	
 }

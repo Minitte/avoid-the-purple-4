@@ -19,6 +19,7 @@ import game.stage.Stage;
 import game.stage.TestStage;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 
 /**
  * @author Davis
@@ -27,16 +28,20 @@ import javafx.scene.paint.Color;
 public class GameCore {
 	
 	private List<Entity> ents;
-	private float cleanTime;
+	private float totalTime;
 	private Stage stg;
 	public InputManager inMgner;
 	public List<Player> players;
+	
+	Font statFont;
 	
 	public GameCore() {
 		ents = new ArrayList<>();
 		players = new ArrayList<>();
 		inMgner = new InputManager();
 		stg = new TestStage(ents);
+		
+		statFont = new Font("Courier", 18);
 		
 		addPlayer("test", Color.RED, 1, new KeyboardInput(null, KeyboardInput.KEYSET_WASD));
 	}
@@ -55,7 +60,7 @@ public class GameCore {
 	 * @param delta
 	 */
 	public void update(float delta) {
-		cleanTime += delta;
+		totalTime += delta;
 		stg.update(delta);
 		inMgner.update();
 		
@@ -67,8 +72,8 @@ public class GameCore {
 					Entity b = ents.get(j);
 					
 					if (b.collidable && a.body.checkCollision(b.body)) {
-						a.handleCollision(b);
-						b.handleCollision(a);
+						a.handleCollision(b, ents);
+						b.handleCollision(a, ents);
 					}
 				}
 			}
@@ -76,7 +81,7 @@ public class GameCore {
 		
 		// update
 		IntStream.range(0, ents.size()).parallel().forEach(i -> {
-			ents.get(i).update(delta);
+			ents.get(i).update(delta, ents);
 		});
 		
 		// clean up dead stuff
@@ -107,11 +112,15 @@ public class GameCore {
 			ents.get(i).draw(gc, delta);
 		}
 		
+		gc.setFont(statFont);
+		
 		for (int i = 0; i < players.size(); i++) {
 			Player p = players.get(i);
 			gc.setFill(p.colour);
 			gc.fillText(String.format("%d %s %03d HP %09d PT", i+1, p.name, p.health, p.score), 10f, 20f + (i * 30f));
 		}
+		
+		gc.fillText(String.format("Time: %06.1f Obj: %04d", totalTime, ents.size()), 640, 20);
 		
 		// draw bodies
 //		for (int i = 0; i < ents.size(); i++) {

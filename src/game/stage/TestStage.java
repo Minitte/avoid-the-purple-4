@@ -4,12 +4,13 @@
 package game.stage;
 
 import java.util.List;
-import java.util.Random;
 
-import game.entities.BallEntity;
 import game.entities.Entity;
-import game.math.Vec2;
+import game.stage.spawner.BallSpawner;
+import game.stage.spawner.SpiltSpawner;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 
 /**
  * @author Davis
@@ -17,85 +18,42 @@ import javafx.scene.canvas.GraphicsContext;
  */
 public class TestStage extends Stage {
 	
-	public float circleSpawnDelay = 0.25f;
-	
-	public float timeConsume;
+	Color bkgdColour;
+	Font bkgdFont;
+	float roundUpPoint;
+	int spawnertrack;
 	
 	/**
 	 * @param ents
 	 */
 	public TestStage(List<Entity> ents) {
 		super(ents);
-		// TODO Auto-generated constructor stub
+		roundUpPoint = 10.0f;
+		spawners.add(new BallSpawner());
+		bkgdFont = new Font("Courier", 182f);
+		bkgdColour = new Color(0.4, 0.4, 0.4, 0.5);
 	}
 
 	/* (non-Javadoc)
-	 * @see game.stage.Stage#update(float)
+	 * @see game.stage.Stage#stageUpdate(float)
 	 */
 	@Override
-	public void update(float delta) {
-		time += delta;
-		timeConsume += delta;
-
-		while (timeConsume > circleSpawnDelay) {
-			timeConsume -= circleSpawnDelay;
-			circleEdgeSpawn();
-		}
-	}
-	
-	private void circleEdgeSpawn() {
-		Random rand = new Random();
-		Entity e = null;
-		Vec2 dir = null;
-		Vec2 pos = null;
-		
-		switch(rand.nextInt(4))
-		{
-		case 0: // top
-			pos = getRandomSpot(Side.TOP, rand);
-			
-			dir = getRandomSpot(Side.BOTTOM, rand);
-			dir.minus(pos);
-			dir.normalize();
-			
-			break;
-			
-		case 1: // right
-			pos = getRandomSpot(Side.RIGHT, rand);
-			
-			dir = getRandomSpot(Side.LEFT, rand);
-			dir.minus(pos);
-			dir.normalize();
-			break;
-			
-		case 2: // bottom
-			pos = getRandomSpot(Side.BOTTOM, rand);
-			
-			dir = getRandomSpot(Side.TOP, rand);
-			dir.minus(pos);
-			dir.normalize();
-			break;
-			
-		case 3: // left;
-			pos = getRandomSpot(Side.LEFT, rand);
-			
-			dir = getRandomSpot(Side.RIGHT, rand);
-			dir.minus(pos);
-			dir.normalize();
-			break;
+	public void stageUpdate(float delta) {
+		if (time > roundUpPoint) {
+			roundUpPoint += roundUpPoint + 5f;
+			round++;
+			increaseDifficultyAll();
 		}
 		
-		e = new BallEntity(pos, 0f, -1, 10f + (15 * rand.nextFloat()));
+		if (round == 1 && spawnertrack == 0) {
+			spawnertrack = round;
+			spawners.add(new SpiltSpawner());
+		}
 		
-		dir.multiply((50f + (130f * rand.nextFloat())) * (1f + ((float)round * ROUND_SPEEDUP)));
-		
-		e.velocity = dir;
-		
-		ents.add(e);
-	}
-
-	private void ballWaveSpawn() {
-		
+		if (round == 2 && spawnertrack == 1) {
+			spawnertrack = round;
+			increaseDifficultyAll();
+		}
 	}
 
 	/* (non-Javadoc)
@@ -103,7 +61,9 @@ public class TestStage extends Stage {
 	 */
 	@Override
 	public void drawBackground(GraphicsContext gc, float delta) {
-		// TODO Auto-generated method stub
+		gc.setFont(bkgdFont);
+		gc.setFill(bkgdColour);
+		gc.fillText("" + (round + 1), 640.0, 360.0);
 		
 	}
 }

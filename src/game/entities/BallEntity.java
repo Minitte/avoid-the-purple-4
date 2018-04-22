@@ -3,6 +3,8 @@
  */
 package game.entities;
 
+import java.util.List;
+
 import game.collision.CollisionBody;
 import game.math.Vec2;
 import javafx.scene.canvas.GraphicsContext;
@@ -15,8 +17,6 @@ import javafx.scene.paint.Color;
 public class BallEntity extends Entity{
 
 	public float radius;
-	
-	private boolean collided;
 
 	/**
 	 * @param position
@@ -37,7 +37,7 @@ public class BallEntity extends Entity{
 	 * @see game.entities.Entity#update(float)
 	 */
 	@Override
-	public void update(float delta) {
+	public void update(float delta, List<Entity> ents) {
 		
 		Vec2 scaledVel = new Vec2(velocity).multiply(delta);
 		
@@ -58,13 +58,14 @@ public class BallEntity extends Entity{
 	}
 
 	/* (non-Javadoc)
-	 * @see game.entities.Entity#handleCollision(game.entities.Entity)
+	 * @see game.entities.Entity#handleCollision(game.entities.Entity, java.util.List)
 	 */
 	@Override
-	public void handleCollision(Entity other) {
+	public void handleCollision(Entity other, List<Entity> ents) {
 		if (other.id > 0) {
 			dead = true;
 		}
+		
 	}
 
 }

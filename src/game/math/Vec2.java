@@ -159,6 +159,14 @@ public class Vec2 {
 		return (x * x) + (y * y);
 	}
 	
+	/**
+	 * Returns the angle of the vector tan-1(y / x)
+	 * @return
+	 */
+	public float getAngle() {
+		return (float)Math.atan(y / x);
+	}
+	
 	private static boolean isZero(float f) {
 		return Math.abs(f) < 0.001f;
 	}
