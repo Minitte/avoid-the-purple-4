@@ -21,7 +21,7 @@ public class SpiltSpawner extends Spawner {
 	 * 
 	 */
 	public SpiltSpawner() {
-		super(1.2f);
+		super(2.5f);
 		// TODO Auto-generated constructor stub
 	}
 
