@@ -16,6 +16,10 @@ import game.math.Vec2;
  */
 public class TestStage extends Stage {
 	
+	public float circleSpawnDelay = 0.25f;
+	
+	public float timeConsume;
+	
 	/**
 	 * @param ents
 	 */
@@ -31,12 +35,11 @@ public class TestStage extends Stage {
 	public void update(float delta) {
 		time += delta;
 		timeConsume += delta;
-		circleEdgeSpawn();
-//		while (timeConsume > 0.125f) {
-//			timeConsume -= 0.125f;
-//			circleEdgeSpawn();
-//		}
 
+		while (timeConsume > circleSpawnDelay) {
+			timeConsume -= circleSpawnDelay;
+			circleEdgeSpawn();
+		}
 	}
 	
 	private void circleEdgeSpawn() {
@@ -49,7 +52,6 @@ public class TestStage extends Stage {
 		{
 		case 0: // top
 			pos = getRandomSpot(Side.TOP, rand);
-			e = new BallEntity(pos, 0f, -1, 10f);
 			
 			dir = getRandomSpot(Side.BOTTOM, rand);
 			dir.minus(pos);
@@ -59,7 +61,6 @@ public class TestStage extends Stage {
 			
 		case 1: // right
 			pos = getRandomSpot(Side.RIGHT, rand);
-			e = new BallEntity(pos, 0f, -1, 10f);
 			
 			dir = getRandomSpot(Side.LEFT, rand);
 			dir.minus(pos);
@@ -68,7 +69,6 @@ public class TestStage extends Stage {
 			
 		case 2: // bottom
 			pos = getRandomSpot(Side.BOTTOM, rand);
-			e = new BallEntity(pos, 0f, -1, 10f);
 			
 			dir = getRandomSpot(Side.TOP, rand);
 			dir.minus(pos);
@@ -77,7 +77,6 @@ public class TestStage extends Stage {
 			
 		case 3: // left;
 			pos = getRandomSpot(Side.LEFT, rand);
-			e = new BallEntity(pos, 0f, -1, 10f);
 			
 			dir = getRandomSpot(Side.RIGHT, rand);
 			dir.minus(pos);
@@ -85,11 +84,16 @@ public class TestStage extends Stage {
 			break;
 		}
 		
-		dir.multiply(100f * (1f + ((float)round * ROUND_SPEEDUP)));
+		e = new BallEntity(pos, 0f, -1, 10f + (15 * rand.nextFloat()));
+		
+		dir.multiply((50f + (130f * rand.nextFloat())) * (1f + ((float)round * ROUND_SPEEDUP)));
 		
 		e.velocity = dir;
 		
 		ents.add(e);
 	}
 
+	private void ballWaveSpawn() {
+		
+	}
 }

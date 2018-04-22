@@ -20,7 +20,6 @@ public abstract class Stage {
 	public int maxRound = 5;
 	public int round;
 	public float time;
-	public float timeConsume;
 	
 	protected List<Entity> ents;
 	

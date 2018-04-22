@@ -9,10 +9,10 @@ package game.stage;
  */
 public enum Side {
 
-	TOP(	0f, 		1280f, 		-50f+100f, 	-50f+100f), //
-	BOTTOM(	0f, 		1280f, 		770f-100f, 	770f-100f), //
-	RIGHT(	1330f-100f, 1330f-100f, 0f, 		720f), //
-	LEFT(	-50f+100f, 	-50f+100f, 	0f, 		720f);
+	TOP(	0f, 	1280f, 	-50f, 	-50f), //
+	BOTTOM(	0f, 	1280f, 	770f, 	770f), //
+	RIGHT(	1330f, 	1330f, 	0f, 	720f), //
+	LEFT(	-50f, 	-50f, 	0f, 	720f); //
 
 	public final float minX, maxX;
 	public final float minY, maxY;
