@@ -8,6 +8,11 @@ package game.math;
  *
  */
 public class Vec2 {
+	public static final Vec2 UP = new Vec2(0, -1f);
+	public static final Vec2 DOWN = new Vec2(0, 1f);
+	public static final Vec2 LEFT = new Vec2(-1f, 0);
+	public static final Vec2 RIGHT = new Vec2(1f, 0);
+	
 	public float x, y;
 
 	/**
@@ -125,8 +130,11 @@ public class Vec2 {
 	 */
 	public Vec2 normalize() {
 		float len = getLength();
-		x /= len;
-		y /= len;
+		
+		if (!isZero(len)) {
+			x /= len;
+			y /= len;
+		}
 		
 		return this;
 	}
@@ -136,7 +144,11 @@ public class Vec2 {
 	 * @return
 	 */
 	public float getLength() {
-		return (float)Math.sqrt((x * x) + (y * y));
+		if (!isZero(x) && !isZero(y)) {
+			return (float)Math.sqrt((x * x) + (y * y));
+		}
+		
+		return 0f;
 	}
 	
 	/**
@@ -145,6 +157,10 @@ public class Vec2 {
 	 */
 	public float getLengthSquared() {
 		return (x * x) + (y * y);
+	}
+	
+	private static boolean isZero(float f) {
+		return Math.abs(f) < 0.001f;
 	}
 
 }
