@@ -1,5 +1,6 @@
 package game;
 	
+import game.input.TargetInputEvent;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
@@ -9,6 +10,7 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -54,6 +56,27 @@ public class Main extends Application {
 		updateTime = frameTime;
 		renderLoop.play();
 		updateLoop.play();
+		
+		// key listener
+		scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+
+			@Override
+			public void handle(KeyEvent ke) {
+				game.inMgner.inputs.add(new TargetInputEvent(0, ke.getCode()));
+				
+			}
+		
+		});
+		
+		scene.setOnKeyReleased(new EventHandler<KeyEvent>() {
+
+			@Override
+			public void handle(KeyEvent ke) {
+				game.inMgner.releases.add(new TargetInputEvent(0, ke.getCode()));
+				
+			}
+		
+		});
 		
 		primaryStage.show();
 	}

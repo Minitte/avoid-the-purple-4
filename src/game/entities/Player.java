@@ -12,33 +12,35 @@ import javafx.scene.paint.Color;
  * @author Davis
  *
  */
-public class BallEntity extends Entity{
+public class Player extends Entity implements Comparable<Player>{
 
-	public float radius;
+	public float radius = 6f;
+	public Color colour;
+	public String name;
+	public int score;
 	
-	private boolean collided;
-
 	/**
 	 * @param position
 	 * @param angle
+	 * @param name
 	 * @param team
-	 * @param radius
 	 */
-	public BallEntity(Vec2 position, float angle, int team, float radius) {
+	public Player(Vec2 position, float angle, int team, String name, Color colour) {
 		super(position, angle, team);
-		this.radius = radius;
-		collidable = true;
+		this.name = name;
+		this.colour = colour;
 		body = new CollisionBody(radius, position);
+		
+		speed = 150f;
+		health = 30;
+		collidable = true;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
+	/* (non-Javadoc)
 	 * @see game.entities.Entity#update(float)
 	 */
 	@Override
 	public void update(float delta) {
-		
 		Vec2 scaledVel = new Vec2(velocity).multiply(delta);
 		
 		position.add(scaledVel);
@@ -46,21 +48,13 @@ public class BallEntity extends Entity{
 		body.translateVertices(scaledVel);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
+	/* (non-Javadoc)
 	 * @see game.entities.Entity#draw(javafx.scene.canvas.GraphicsContext, float)
 	 */
 	@Override
 	public void draw(GraphicsContext gc, float delta) {
-		gc.setFill(Color.PURPLE);
+		gc.setFill(colour);
 		gc.fillOval(position.x - radius, position.y - radius, radius * 2f, radius * 2f);
-		
-		if (collided) {
-			collided = false;
-			gc.setStroke(Color.BEIGE);
-			gc.strokeText("Hit!", position.x, position.y);
-		}
 	}
 
 	/* (non-Javadoc)
@@ -68,7 +62,15 @@ public class BallEntity extends Entity{
 	 */
 	@Override
 	public void handleCollision(Entity other) {
-		collided = true;
+		// TODO Auto-generated method stub
+
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Comparable#compareTo(java.lang.Object)
+	 */
+	@Override
+	public int compareTo(Player arg0) {
+		return arg0.score - score;
+	}
 }

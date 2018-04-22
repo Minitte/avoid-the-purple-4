@@ -15,12 +15,16 @@ import javafx.scene.canvas.GraphicsContext;
 public abstract class Entity {
 	public Vec2 position;
 	public float angle;
-	public int team;
 	public Vec2 velocity;
-	public int id;
+	
 	public CollisionBody body;
 	public boolean collidable;
 
+	public int id;
+	public int team;
+	public float speed;
+	public int health;
+	
 	/**
 	 * @param position
 	 * @param angle
