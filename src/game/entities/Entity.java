@@ -58,4 +58,15 @@ public abstract class Entity {
 	public abstract void draw(GraphicsContext gc, float delta);
 	
 	public abstract void handleCollision(Entity other, List<Entity> ents);
+
+	/**
+	 * @param angle the angle to set
+	 */
+	public void rotateTo(float angle) {
+		this.angle = angle;
+		
+		body.rotate((float) Math.toRadians(angle));
+	}
+	
+	
 }
