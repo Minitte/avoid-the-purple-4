@@ -14,7 +14,7 @@ import javafx.scene.paint.Color;
  * @author Davis
  *
  */
-public class MissleEntity extends Entity {
+public class MissileEntity extends Entity {
 
 	/**
 	 * @param position
@@ -23,7 +23,7 @@ public class MissleEntity extends Entity {
 	 * @param length
 	 * @param width
 	 */
-	public MissleEntity(Vec2 position, float angle, int team, float length, float width) {
+	public MissileEntity(Vec2 position, float angle, int team, float length, float width) {
 		super(position, angle, team);
 		
 		float halfLen = length / 2f;
@@ -37,7 +37,8 @@ public class MissleEntity extends Entity {
 		};
 		
 		body = new CollisionBody(vertice);
-		
+		rotateTo(angle);
+		body.translateVertices(position);
 	}
 
 	/* (non-Javadoc)
@@ -66,7 +67,6 @@ public class MissleEntity extends Entity {
 		double[] arrY = {body.vertices[0].y, body.vertices[1].y, body.vertices[2].y, body.vertices[3].y};
 		
 		gc.fillPolygon(arrX, arrY, 4);
-
 	}
 
 	/* (non-Javadoc)
@@ -74,7 +74,9 @@ public class MissleEntity extends Entity {
 	 */
 	@Override
 	public void handleCollision(Entity other, List<Entity> ents) {
-		// TODO Auto-generated method stub
+		if (other.id > 0) {
+			dead = true;
+		}
 
 	}
 
