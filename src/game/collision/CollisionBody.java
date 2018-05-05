@@ -24,11 +24,7 @@ public class CollisionBody {
 		super();
 		this.vertices = vertices;
 		
-		normals = new Vec2[vertices.length];
-		
-		for (int i = 0; i < vertices.length; i++) {
-			normals[i] = new Vec2(vertices[i]).minus(vertices[(i + 1) % vertices.length]).normalize();
-		}
+		calculateNormals();
 	}
 	
 	/**
@@ -49,6 +45,13 @@ public class CollisionBody {
 		}
 		
 		// normals
+		calculateNormals();
+	}
+	
+	/**
+	 * calculates the normals for the edges
+	 */
+	private void calculateNormals() {
 		normals = new Vec2[vertices.length];
 		
 		for (int i = 0; i < vertices.length; i++) {
@@ -69,13 +72,22 @@ public class CollisionBody {
 	/**
 	 * Rotates the body
 	 * @param r
+	 * @param center
 	 */
-	public void rotate(float r) {
+	public void rotate(float r, Vec2 center) {
 		Mat22 rot = new Mat22(r);
+		Vec2 toCenter = new Vec2(center).multiply(-1f);
 		
 		for (int i = 0; i < vertices.length; i++) {
+			// translate to (0, 0)
+			vertices[i].add(toCenter);
+			
+			// rotate
 			vertices[i].multiply(rot);
 			normals[i].multiply(rot);
+			
+			// translate back
+			vertices[i].add(center);
 		}
 	}
 	
