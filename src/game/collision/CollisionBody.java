@@ -76,11 +76,11 @@ public class CollisionBody {
 	 */
 	public void rotate(float r, Vec2 center) {
 		Mat22 rot = new Mat22(r);
-		Vec2 toCenter = new Vec2(center).multiply(-1f);
 		
 		for (int i = 0; i < vertices.length; i++) {
+			
 			// translate to (0, 0)
-			vertices[i].add(toCenter);
+			vertices[i].minus(center);
 			
 			// rotate
 			vertices[i].multiply(rot);
