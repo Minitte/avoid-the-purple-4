@@ -16,6 +16,9 @@ import javafx.scene.paint.Color;
  */
 public class MissileEntity extends Entity {
 
+	private float length;
+	private float width;
+	
 	/**
 	 * @param position
 	 * @param angle
@@ -26,19 +29,23 @@ public class MissileEntity extends Entity {
 	public MissileEntity(Vec2 position, float angle, int team, float length, float width) {
 		super(position, angle, team);
 		
-		float halfLen = length / 2f;
+		this.length = length;
+		this.width = width;
+		
+		float thirdLen = length / 3f;
 		float halfWid = width / 2f;
 		
 		Vec2[] vertice = {
-			new Vec2(-halfLen, -halfWid),
-			new Vec2(halfLen, -halfWid),
-			new Vec2(halfLen, halfWid),
-			new Vec2(-halfLen, halfWid)
+			new Vec2(-thirdLen, -halfWid),
+			new Vec2(thirdLen, -halfWid),
+			new Vec2(thirdLen * 2f, 0f),
+			new Vec2(thirdLen, halfWid),
+			new Vec2(-thirdLen, halfWid)
 		};
 		
 		body = new CollisionBody(vertice);
-		rotateTo(angle);
 		body.translateVertices(position);
+		body.rotate((float)Math.toRadians(angle), position);
 	}
 
 	/* (non-Javadoc)
@@ -52,7 +59,6 @@ public class MissileEntity extends Entity {
 		position.add(scaledVel);
 		
 		body.translateVertices(scaledVel);
-
 	}
 
 	/* (non-Javadoc)
@@ -63,10 +69,10 @@ public class MissileEntity extends Entity {
 		gc.setFill(Color.MEDIUMPURPLE);
 		
 		// convert xy array
-		double[] arrX = {body.vertices[0].x, body.vertices[1].x, body.vertices[2].x, body.vertices[3].x};
-		double[] arrY = {body.vertices[0].y, body.vertices[1].y, body.vertices[2].y, body.vertices[3].y};
+		double[] arrX = {body.vertices[0].x, body.vertices[1].x, body.vertices[2].x, body.vertices[3].x, body.vertices[4].x};
+		double[] arrY = {body.vertices[0].y, body.vertices[1].y, body.vertices[2].y, body.vertices[3].y, body.vertices[4].y};
 		
-		gc.fillPolygon(arrX, arrY, 4);
+		gc.fillPolygon(arrX, arrY, 5);
 	}
 
 	/* (non-Javadoc)
@@ -77,7 +83,6 @@ public class MissileEntity extends Entity {
 		if (other.id > 0) {
 			dead = true;
 		}
-
 	}
 
 }
