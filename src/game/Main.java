@@ -21,6 +21,8 @@ public class Main extends Application {
 	private static final double TARGET_FPS = 60;
 	private static final double TARGET_UPDATE_RATE = 30;
 	
+	public static boolean debugMode;
+	
 	private Timeline renderLoop, updateLoop;
 	private long frameTime;
 	private long updateTime;
@@ -31,6 +33,9 @@ public class Main extends Application {
 	private Stage primaryStage;
 	
 	public static void main(String[] args) {
+		if (args.length > 0) {
+			debugMode = args[0].equals("-DebugMode");
+		}
 		launch(args);
 	}
 	
@@ -51,6 +56,7 @@ public class Main extends Application {
 		root.getChildren().add(canvas);
 		
 		game = new GameCore();
+		game.debugMode = debugMode;
 		gc = canvas.getGraphicsContext2D();
         gc.setTextBaseline(VPos.CENTER);
 		initializeLoop();

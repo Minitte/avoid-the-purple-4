@@ -33,6 +33,7 @@ public class GameCore {
 	private Stage stg;
 	public InputManager inMgner;
 	public List<Player> players;
+	public boolean debugMode;
 	
 	Font statFont;
 	
@@ -125,22 +126,29 @@ public class GameCore {
 		gc.setTextAlign(TextAlignment.CENTER);
 		gc.fillText(String.format("Time: %06.1f Obj: %04d", totalTime, ents.size()), 640, 20);
 		
-		// draw bodies
-//		for (int i = 0; i < ents.size(); i++) {
-//			if (ents.get(i).body != null) {
-//				Vec2[] vert = ents.get(i).body.vertices;
-//				
-//				for (int j = 0; j < vert.length; j++) {
-//					gc.setFill(Color.RED);
-//					gc.fillRect(vert[j].x - 2f, vert[j].y - 2f, 4f, 4f);
-//				}
-//			}
-//		}
-		
-//		for (int i = 0; i < ents.size(); i++) {
-//			gc.setStroke(Color.AQUA);
-//			Vec2 dest = new Vec2(ents.get(i).position).add(ents.get(i).velocity);
-//			gc.strokeLine(ents.get(i).position.x, ents.get(i).position.y, dest.x, dest.y);
-//		}
+		// debug render
+		if (debugMode) {
+			// draw bodies
+			for (int i = 0; i < ents.size(); i++) {
+				if (ents.get(i).body != null) {
+					Vec2[] vert = ents.get(i).body.vertices;
+					
+					for (int j = 0; j < vert.length; j++) {
+						gc.setFill(Color.RED);
+						gc.fillRect(vert[j].x - 2f, vert[j].y - 2f, 4f, 4f);
+					}
+				}
+			}
+			
+			// velocity and position
+			for (int i = 0; i < ents.size(); i++) {
+				gc.setStroke(Color.AQUA);
+				Vec2 dest = new Vec2(ents.get(i).position).add(ents.get(i).velocity);
+				gc.strokeLine(ents.get(i).position.x, ents.get(i).position.y, dest.x, dest.y);
+				
+				gc.setFill(Color.GREEN);
+				gc.fillOval(ents.get(i).position.x - 2f, ents.get(i).position.y - 2f, 4f, 4f);
+			}
+		}
 	}
 }
