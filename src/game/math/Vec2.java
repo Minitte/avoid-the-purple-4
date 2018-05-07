@@ -12,6 +12,9 @@ public class Vec2 {
 	public static final Vec2 DOWN = new Vec2(0, 1f);
 	public static final Vec2 LEFT = new Vec2(-1f, 0);
 	public static final Vec2 RIGHT = new Vec2(1f, 0);
+	public static final Vec2 ZERO = new Vec2();
+	
+	private static float halfPi = (float) (Math.PI / 2f);
 	
 	public float x, y;
 
@@ -100,8 +103,9 @@ public class Vec2 {
 	 * @return
 	 */
 	public Vec2 multiply(Mat22 m) {
+		float oldX = x;
 		x = (x * m.values[0][0]) + (y * m.values[0][1]);
-		y = (x * m.values[1][0]) + (y * m.values[1][1]);
+		y = (oldX * m.values[1][0]) + (y * m.values[1][1]);
 		
 		return this;
 	}
@@ -160,11 +164,12 @@ public class Vec2 {
 	}
 	
 	/**
-	 * Returns the angle of the vector tan-1(y / x)
+	 * Returns the angle of the vector 
 	 * @return
 	 */
 	public float getAngle() {
-		return (float)Math.atan(y / x);
+		
+		return (float)Math.atan2(x, y) + (halfPi * 3f);
 	}
 	
 	private static boolean isZero(float f) {

@@ -17,9 +17,12 @@ public class Mat22 {
 	public Mat22(float r) {
 		values = new float[2][2];
 		
-		values[0][0] = (float) Math.cos(r);
-		values[1][0] = (float) Math.sin(r);
-		values[0][1] = -values[1][0];
-		values[1][1] = values[0][0];
+		float cos = (float) Math.cos(r);
+		float sin = (float) Math.sin(r);
+		
+		values[0][0] = cos;
+		values[1][0] = -sin;
+		values[0][1] = sin;
+		values[1][1] = cos;
 	}
 }
